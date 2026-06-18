@@ -35,6 +35,10 @@ const LeadForm = () => {
     }
   }, [id, isEdit]);
 
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.lead_name.trim()) return toast.error('Lead name is required.');
@@ -56,21 +60,6 @@ const LeadForm = () => {
     }
   };
 
-  const Field = ({ label, name, type = 'text', required }) => (
-    <div>
-      <label className="block text-sm font-medium text-slate-700 mb-1">
-        {label} {required && <span className="text-red-400">*</span>}
-      </label>
-      <input
-        type={type}
-        className="input-field"
-        value={form[name]}
-        onChange={(e) => setForm({ ...form, [name]: e.target.value })}
-        required={required}
-      />
-    </div>
-  );
-
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-slate-700 mb-6 text-sm">
@@ -84,30 +73,69 @@ const LeadForm = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <Field label="Lead Name" name="lead_name" required />
-            <Field label="Company Name" name="company_name" />
-            <Field label="Email" name="email" type="email" />
-            <Field label="Phone" name="phone" />
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">
+                Lead Name <span className="text-red-400">*</span>
+              </label>
+              <input
+                type="text"
+                name="lead_name"
+                className="input-field"
+                value={form.lead_name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
+              <input
+                type="text"
+                name="company_name"
+                className="input-field"
+                value={form.company_name}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                className="input-field"
+                value={form.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                className="input-field"
+                value={form.phone}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Lead Source</label>
-              <select className="input-field" value={form.lead_source} onChange={(e) => setForm({ ...form, lead_source: e.target.value })}>
+              <select name="lead_source" className="input-field" value={form.lead_source} onChange={handleChange}>
                 <option value="">Select source</option>
                 {LEAD_SOURCES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Assigned To</label>
-              <select className="input-field" value={form.assigned_to} onChange={(e) => setForm({ ...form, assigned_to: e.target.value })}>
+              <select name="assigned_to" className="input-field" value={form.assigned_to} onChange={handleChange}>
                 <option value="">Unassigned</option>
                 {users.map((u) => <option key={u.id} value={u.id}>{u.name}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Status</label>
-              <select className="input-field" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+              <select name="status" className="input-field" value={form.status} onChange={handleChange}>
                 {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </div>
@@ -115,12 +143,13 @@ const LeadForm = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Deal Value (USD)</label>
               <input
                 type="number"
+                name="deal_value"
                 min="0"
                 step="0.01"
                 className="input-field"
                 placeholder="0.00"
                 value={form.deal_value}
-                onChange={(e) => setForm({ ...form, deal_value: e.target.value })}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -129,7 +158,9 @@ const LeadForm = () => {
             <button type="submit" disabled={loading} className="btn-primary">
               <FiSave /> {loading ? 'Saving...' : isEdit ? 'Update Lead' : 'Create Lead'}
             </button>
-            <button type="button" onClick={() => navigate(-1)} className="btn-secondary">Cancel</button>
+            <button type="button" onClick={() => navigate(-1)} className="btn-secondary">
+              Cancel
+            </button>
           </div>
         </form>
       </div>
