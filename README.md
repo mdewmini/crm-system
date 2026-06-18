@@ -29,15 +29,15 @@ crm-system/
 
 │   ├── src/
 
-│   │   ├── config/        # PostgreSQL connection
+│   │   ├── config/        
 
-│   │   ├── controllers/   # Auth, leads, notes, dashboard, users
+│   │   ├── controllers/   
 
-│   │   ├── middleware/    # JWT auth middleware
+│   │   ├── middleware/    
 
-│   │   └── routes/        # Express route definitions
+│   │   └── routes/        
 
-│   ├── .env               # Environment variables (not committed)
+│   ├── .env               
 
 │   └── package.json
 
@@ -45,15 +45,14 @@ crm-system/
 
 │   ├── src/
 
-│   │   ├── components/    # Navbar, StatusBadge, LoadingSpinner, ProtectedRoute
+│   │   ├── components/    
 
-│   │   ├── context/       # AuthContext (JWT + localStorage)
+│   │   ├── context/       
 
-│   │   ├── pages/         # Login, Dashboard, LeadsList, LeadForm, LeadDetail
+│   │   ├── pages/        
+│   │   ├── services/     
 
-│   │   ├── services/      # Axios API service
-
-│   │   └── utils/         # Status colors, formatters, constants
+│   │   └── utils/         
 
 │   └── package.json
 
@@ -145,7 +144,7 @@ DB_USER=your_postgres_username
 
 DB_PASSWORD=
 
-JWT_SECRET=crm_super_secret_key_2024
+JWT_SECRET=-------
 
 NODE_ENV=development
 
